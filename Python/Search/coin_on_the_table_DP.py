@@ -95,36 +95,40 @@ def traverseTable(table,startX,startY,K,N,M):
     x,y = startX,startY
     #print('x: %s y: %s'%(x,y))
     
-    if x + 1 <M and table[y][x+1][1] == float('inf'):
+    if x + 1 <M and table[y][x+1][1] == None:
         #print('x + 1 <M')
         table[y][x+1][1],table[y][x+1][2] = computeCount(table,x+1,y,K,N,M)
         if table[y][x+1][1] == float('inf'):
-            print('BAD')
+            #print('BAD')
             #Search for better
+            table[y][x+1][1],table[y][x+1][2] = searchNearby(table,x+1,y,table[y][x+1][1],K,N,M)
         traverseTable(table,x+1,y,K,N,M)
-    if x - 1 >=0 and table[y][x-1][1] == float('inf'):
+    if x - 1 >=0 and table[y][x-1][1] == None:
         #print('x - 1 >=0')
         table[y][x-1][1],table[y][x-1][2] = computeCount(table,x-1,y,K,N,M)
         if table[y][x-1][1] == float('inf'):
-            print('BAD')
+            #print('BAD')
             #Search for better
+            table[y][x-1][1],table[y][x-1][2] = searchNearby(table,x-1,y,table[y][x-1][1],K,N,M)
         traverseTable(table,x-1,y,K,N,M)
-    if y + 1 <N and table[y+1][x][1] == float('inf'):
+    if y + 1 <N and table[y+1][x][1] == None:
         #print('y + 1 <N')
         table[y+1][x][1],table[y+1][x][2] = computeCount(table,x,y+1,K,N,M)
         if table[y+1][x][1] == float('inf'):
-            print('BAD')
+            #print('BAD')
             #Search for better
+            table[y+1][x][1],table[y+1][x][2] = searchNearby(table,x,y+1,table[y+1][x][1],K,N,M)
         traverseTable(table,x,y+1,K,N,M)
-    if y - 1 >=0 and table[y-1][x][1] == float('inf'):
+    if y - 1 >=0 and table[y-1][x][1] == None:
         #print('y - 1 >=0')
         table[y-1][x][1],table[y-1][x][2] = computeCount(table,x,y-1,K,N,M)
         if table[y-1][x][1] == float('inf'):
-            print('BAD')
+            #print('BAD')
             #Search for better
+            table[y-1][x][1],table[y-1][x][2] = searchNearby(table,x,y-1,table[y-1][x][1],K,N,M)
         traverseTable(table,x,y-1,K,N,M)
     
-    if table[0][0][1] == -1:
+    if table[0][0][1] == float('inf'):
         return -1
     else:
         return table[0][0][2]
@@ -144,7 +148,10 @@ def computeCount(table,startX,startY,K,N,M):
     if x < 0 or x >= M or y < 0 or y >= N:
         return (float('inf'),0)
     else:
-        dist = table[y][x][1] +1
+        if table[y][x][1] == None:
+            dist = float('inf')
+        else:
+            dist = table[y][x][1] +1
         if dist > K:
             #print('sx %s sy %s'%(startX, startY))
             #print('x %s y %s'%(x, y))
@@ -159,7 +166,9 @@ def searchNearby(table,x,y,dist,K,N,M):
     #print(best)
     count = 0
     if x + 1 <M:
-        if table[y][x+1][1]+1 < best and table[y][x+1][1] != -1:
+        #if table[y][x+1][1] == None:
+            #table[y][x+1][1],table[y][x+1][2] = computeCount(table,x+1,y,K,N,M)
+        if table[y][x+1][1] != None and table[y][x+1][1]+1 < best and table[y][x+1][1] != float('inf'):
             best = table[y][x+1][1]+1
             #print('1%s'%best)
             if table[y][x][0] == 'R':
@@ -168,7 +177,9 @@ def searchNearby(table,x,y,dist,K,N,M):
                 count = table[y][x+1][2]+1
                 table[y][x][0] = 'R'
     if x - 1 >=0:
-        if table[y][x-1][1]+1 < best and table[y][x-1][1] != -1:
+        #if table[y][x-1][1] == None:
+            #table[y][x-1][1],table[y][x-1][2] = computeCount(table,x-1,y,K,N,M)
+        if table[y][x-1][1] != None and table[y][x-1][1]+1 < best and table[y][x-1][1] != float('inf'):
             #print('2%s'%best)
             best = table[y][x-1][1]+1
             if table[y][x][0] == 'L':
@@ -177,7 +188,9 @@ def searchNearby(table,x,y,dist,K,N,M):
                 count = table[y][x-1][2]+1
                 table[y][x][0] = 'L'
     if y + 1 <N:
-        if table[y+1][x][1]+1 < best and table[y+1][x][1] != -1:
+        #if table[y+1][x][1] == None:
+            #table[y+1][x][1],table[y+1][x][2] = computeCount(table,x,y+1,K,N,M)
+        if table[y+1][x][1] != None and table[y+1][x][1]+1 < best and table[y+1][x][1] != float('inf'):
             best = table[y+1][x][1]+1
             #print('3%s'%best)
             if table[y][x][0] == 'D':
@@ -186,7 +199,9 @@ def searchNearby(table,x,y,dist,K,N,M):
                 count = table[y+1][x][2]+1
                 table[y][x][0] = 'D'
     if y - 1 >=0:
-        if table[y-1][x][1]+1 < best and table[y-1][x][1] != -1:
+        #if table[y-1][x][1] == None:
+            #table[y-1][x][1],table[y-1][x][2] = computeCount(table,x,y-1,K,N,M)
+        if table[y-1][x][1] != None and table[y-1][x][1]+1 < best and table[y-1][x][1] != float('inf'):
             best = table[y-1][x][1]+1
             #print('4%s'%best)
             if table[y][x][0] == 'U':
@@ -194,8 +209,9 @@ def searchNearby(table,x,y,dist,K,N,M):
             else:
                 count = table[y-1][x][2]+1
                 table[y][x][0] = 'U'
+    #print(best)
     if best > K:
-        return -1,0
+        return float('inf'),0
     else:
         return best,count
     
@@ -214,7 +230,7 @@ if __name__ == '__main__':
     for row in range(N):
         table.append([])
         for char in input().strip():
-            table[row].append([char, float('inf'),0,char])
+            table[row].append([char, None,0,char])
 
     endpt = findEnd(table)
     table[endpt[0]][endpt[1]][1] = 0

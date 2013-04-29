@@ -81,15 +81,19 @@ def traverseTable(table,startX,startY,K,N,M):
         table[y][x][1],table[y][x][2],changed = searchNearby(table,x,y,table[y][x][1],table[y][x][2],K,N,M,followUp)
         if changed:
             if x - 1 >=0:
-                followUp.enQueue((x-1,y))
+                if checkNearby(table,x,y,x-1,y,K):
+                    followUp.enQueue((x-1,y))
             if y - 1 >=0:
-                followUp.enQueue((x,y-1))
+                if checkNearby(table,x,y,x,y-1,K):
+                    followUp.enQueue((x,y-1))
             if x + 1 <M:
-                followUp.enQueue((x+1,y))
+                if checkNearby(table,x,y,x+1,y,K):
+                    followUp.enQueue((x+1,y))
             if y + 1 <N:
-                followUp.enQueue((x,y+1))
+                if checkNearby(table,x,y,x,y+1,K):
+                    followUp.enQueue((x,y+1))
         second = followUp.deQueue()
-    
+        
     if table[0][0][1] == float('inf'):
         return -1
     else:
@@ -174,6 +178,15 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
         return float('inf'),0,changed
     else:
         return dist,best,changed
+    
+def checkNearby(table,x1,y1,x2,y2,K):
+    if table[y1][x1][1] == K:
+        return False
+    if table[y1][x1][2] < table[y2][x2][2] or table[y2][x2][1] == float('inf'):
+        return True
+    else:
+        return False
+    
 
 if __name__ == '__main__':
 
@@ -194,3 +207,4 @@ if __name__ == '__main__':
     table[endpt[0]][endpt[1]][1] = 0
     
     print(traverseTable(table,endpt[1],endpt[0],K,N,M))
+    

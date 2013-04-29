@@ -1,4 +1,42 @@
-from Queue_head import Queue
+class Element:
+    def __init__(self, data, next):
+        self.data = data
+        self.next = next
+        
+class Queue:
+    def __init__(self):
+        self.head = None        
+        
+    def __str__(self):
+        ptr = self.head
+        if(self.head==None):
+            string = "Front < > Back"
+        else:
+            string = "Front < "
+            while ptr:
+                string += ("%s "%str(ptr.data))
+                ptr = ptr.next
+            string += "> Back"
+        return string
+        
+    def enQueue(self,data):
+        #Append the most recent node to the end
+        ptr = self.head
+        if(ptr == None):
+            self.head = Element(data,self.head)
+        else:
+            while ptr.next:
+                ptr=ptr.next
+            ptr.next = Element(data, None)
+        
+    def deQueue(self):
+        #move head ptr and return previous head
+        if(self.head == None):
+            return None
+        ptr = self.head
+        self.head = self.head.next
+        ptr.next = None
+        return ptr.data
 
 def findEnd(table):
     for ri,row in enumerate(table):
@@ -19,51 +57,22 @@ def traverseTable(table,startX,startY,K,N,M):
         x = first[0]
         y = first[1]
         if x - 1 >=0 and table[y][x-1][1] == None:
-            #print('x - 1 >=0')
             table[y][x-1][1],table[y][x-1][2] = computeCount(table,x-1,y,K,N,M)
-            #if table[y][x-1][1] == float('inf'):
-                #print('BAD')
-                #Search for better
-            #table[y][x-1][1],table[y][x-1][2] = searchNearby(table,x-1,y,table[y][x-1][1],table[y][x-1][2],K,N,M)
-            #traverseTable(table,x-1,y,K,N,M)
             queue.enQueue((x-1,y))
             
         if y - 1 >=0 and table[y-1][x][1] == None:
-            #print('y - 1 >=0')
             table[y-1][x][1],table[y-1][x][2] = computeCount(table,x,y-1,K,N,M)
-            #if table[y-1][x][1] == float('inf'):
-                #print('BAD')
-                #Search for better
-            #table[y-1][x][1],table[y-1][x][2] = searchNearby(table,x,y-1,table[y-1][x][1],table[y-1][x][2],K,N,M)
-            #traverseTable(table,x,y-1,K,N,M)
             queue.enQueue((x,y-1))
     
         if x + 1 <M and table[y][x+1][1] == None:
-            #print('x + 1 <M')
             table[y][x+1][1],table[y][x+1][2] = computeCount(table,x+1,y,K,N,M)
-            #if table[y][x+1][1] == float('inf'):
-                #print('BAD')
-                #Search for better
-            #table[y][x+1][1],table[y][x+1][2] = searchNearby(table,x+1,y,table[y][x+1][1],table[y][x+1][2],K,N,M)
-            #traverseTable(table,x+1,y,K,N,M)
             queue.enQueue((x+1,y))
     
         if y + 1 <N and table[y+1][x][1] == None:
-            #print('y + 1 <N')
             table[y+1][x][1],table[y+1][x][2] = computeCount(table,x,y+1,K,N,M)
-            #if table[y+1][x][1] == float('inf'):
-                #print('BAD')
-                #Search for better
-            #table[y+1][x][1],table[y+1][x][2] = searchNearby(table,x,y+1,table[y+1][x][1],table[y+1][x][2],K,N,M)
-            #traverseTable(table,x,y+1,K,N,M)
             queue.enQueue((x,y+1))
             
         first = queue.deQueue()
-        
-    print('##################')
-    for row in table:
-        print(row)
-    print('##################')
 
     second = followUp.deQueue()
     while second:
@@ -71,8 +80,6 @@ def traverseTable(table,startX,startY,K,N,M):
         y = second[1]
         table[y][x][1],table[y][x][2],changed = searchNearby(table,x,y,table[y][x][1],table[y][x][2],K,N,M,followUp)
         if changed:
-            #print('(%s, %s) changed'%(x,y))
-            #print('To %d, %d'%(table[y][x][1],table[y][x][2]))
             if x - 1 >=0:
                 followUp.enQueue((x-1,y))
             if y - 1 >=0:
@@ -82,10 +89,6 @@ def traverseTable(table,startX,startY,K,N,M):
             if y + 1 <N:
                 followUp.enQueue((x,y+1))
         second = followUp.deQueue()
-    #    
-    #for ri,row in enumerate(table):
-    #    for si,square in enumerate(row):
-    #        square[1],square[2] = searchNearby(table,si,ri,square[1],square[2],K,N,M)
     
     if table[0][0][1] == float('inf'):
         return -1
@@ -93,7 +96,6 @@ def traverseTable(table,startX,startY,K,N,M):
         return table[0][0][2]
 
 def computeCount(table,startX,startY,K,N,M):
-    #count = 0
     x,y = startX,startY
     ptr = table[y][x]
     if ptr[0] == 'U':
@@ -113,8 +115,6 @@ def computeCount(table,startX,startY,K,N,M):
             dist = table[y][x][1] +1
         count = table[y][x][2]
         if dist > K:
-            #print('sx %s sy %s'%(startX, startY))
-            #print('x %s y %s'%(x, y))
             dist,count,changed = searchNearby(table,startX,startY,dist,count,K,N,M)
         return (dist,count)
 
@@ -124,37 +124,18 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
     prevCount = count
     prevDist = dist
     prevDir = table[y][x][0]
-    #print('--------------------------')
-    #print('x: %s y: %s'%(x,y))
-    #print('best: %s' %best)
-    #print('dist: %s' %dist)
     
     if y + 1 <N:
-        #print('y + 1 <N')
-        #if table[y+1][x][1] == None:
-            #table[y+1][x][1],table[y+1][x][2] = computeCount(table,x,y+1,K,N,M)
         if table[y+1][x][1] != None and table[y+1][x][1]+1 <= K and (table[y+1][x][2] < best or dist == float('inf')):
             dist = table[y+1][x][1]+1
-            #print(table[y][x][0])
             if table[y][x][3] == 'D':
                 best = table[y+1][x][2]
             else:
                 best = table[y+1][x][2]+1
             if table[y][x][0] != 'D':
                 table[y][x][0] = 'D'
-        #    print('best: %s' %best)
-        #    print('dist: %s' %dist)
-        #else:
-        #    print('NODICE:')
-        #    print('Not None?: %s'%str(table[y+1][x][1]))
-        #    #print('<K: %s'%str(table[y+1][x][1]+1))
-        #    print('%d < %d OR'%(table[y+1][x][2],best))
-        #    print('%f == inf'%dist)
-        
+
     if x + 1 <M:
-        #print('x + 1 <M')
-        #if table[y][x+1][1] == None:
-            #table[y][x+1][1],table[y][x+1][2] = computeCount(table,x+1,y,K,N,M)
         if table[y][x+1][1] != None and table[y][x+1][1]+1 <= K and (table[y][x+1][2] < best or dist == float('inf')):
             dist = table[y][x+1][1]+1
             if table[y][x][3] == 'R':
@@ -163,19 +144,8 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
                 best = table[y][x+1][2]+1
             if table[y][x][0] != 'R':
                 table[y][x][0] = 'R'
-                #print('best: %s' %best)
-                #print('dist: %s' %dist)
-        #else:
-        #    print('NODICE:')
-        #    print('Not None?: %s'%str(table[y][x+1][1]))
-        #    #print('<K: %s'%str(table[y][x+1][1]+1))
-        #    print('%d < %d OR'%(table[y][x+1][2],best))
-        #    print('%f == inf'%dist)
-        
+
     if y - 1 >=0:
-        #print('y - 1 >=0')
-        #if table[y-1][x][1] == None:
-            #table[y-1][x][1],table[y-1][x][2] = computeCount(table,x,y-1,K,N,M)
         if table[y-1][x][1] != None and table[y-1][x][1]+1 <= K and (table[y-1][x][2] < best or dist == float('inf')):
             dist = table[y-1][x][1]+1
             if table[y][x][3] == 'U':
@@ -186,9 +156,6 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
                 table[y][x][0] = 'U'
 
     if x - 1 >=0:
-        #print('x - 1 >=0')
-        #if table[y][x-1][1] == None:
-            #table[y][x-1][1],table[y][x-1][2] = computeCount(table,x-1,y,K,N,M)
         if table[y][x-1][1] != None and table[y][x-1][1]+1 <= K and (table[y][x-1][2] < best or dist == float('inf')):
             dist = table[y][x-1][1]+1
             if table[y][x][3] == 'L':
@@ -198,13 +165,6 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
             if table[y][x][0] != 'L':
                 table[y][x][0] = 'L'
 
-
-    #print('After:')
-    #print('best: %s' %best)
-    #print('dist: %s' %dist)
-
-
-    #print(best)
     if prevCount == best and prevDist == dist and prevDir == table[y][x][0]:
         changed = False
     else:
@@ -214,8 +174,6 @@ def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
         return float('inf'),0,changed
     else:
         return dist,best,changed
-    
-    
 
 if __name__ == '__main__':
 
@@ -235,10 +193,4 @@ if __name__ == '__main__':
     endpt = findEnd(table)
     table[endpt[0]][endpt[1]][1] = 0
     
-    for row in table:
-        print(row)
-    
-    print('ANSWER:%s'%traverseTable(table,endpt[1],endpt[0],K,N,M))
-    print('--------------------------------')
-    for row in table:
-        print(row)
+    print(traverseTable(table,endpt[1],endpt[0],K,N,M))

@@ -69,7 +69,18 @@ def traverseTable(table,startX,startY,K,N,M):
     while second:
         x = second[0]
         y = second[1]
-        table[y][x][1],table[y][x][2] = searchNearby(table,x,y,table[y][x][1],table[y][x][2],K,N,M)
+        table[y][x][1],table[y][x][2],changed = searchNearby(table,x,y,table[y][x][1],table[y][x][2],K,N,M,followUp)
+        if changed:
+            #print('(%s, %s) changed'%(x,y))
+            #print('To %d, %d'%(table[y][x][1],table[y][x][2]))
+            if x - 1 >=0:
+                followUp.enQueue((x-1,y))
+            if y - 1 >=0:
+                followUp.enQueue((x,y-1))
+            if x + 1 <M:
+                followUp.enQueue((x+1,y))
+            if y + 1 <N:
+                followUp.enQueue((x,y+1))
         second = followUp.deQueue()
     #    
     #for ri,row in enumerate(table):
@@ -104,17 +115,19 @@ def computeCount(table,startX,startY,K,N,M):
         if dist > K:
             #print('sx %s sy %s'%(startX, startY))
             #print('x %s y %s'%(x, y))
-            dist,count = searchNearby(table,startX,startY,dist,count,K,N,M)
+            dist,count,changed = searchNearby(table,startX,startY,dist,count,K,N,M)
         return (dist,count)
 
-def searchNearby(table,x,y,dist,count,K,N,M):
+def searchNearby(table,x,y,dist,count,K,N,M,queue=None):
     ptr = table[y][x]
     best = count
+    prevCount = count
+    prevDist = dist
+    prevDir = table[y][x][0]
     #print('--------------------------')
     #print('x: %s y: %s'%(x,y))
     #print('best: %s' %best)
     #print('dist: %s' %dist)
-
     
     if y + 1 <N:
         #print('y + 1 <N')
@@ -192,10 +205,15 @@ def searchNearby(table,x,y,dist,count,K,N,M):
 
 
     #print(best)
-    if dist > K:
-        return float('inf'),0
+    if prevCount == best and prevDist == dist and prevDir == table[y][x][0]:
+        changed = False
     else:
-        return dist,best
+        changed = True
+    
+    if dist > K:
+        return float('inf'),0,changed
+    else:
+        return dist,best,changed
     
     
 

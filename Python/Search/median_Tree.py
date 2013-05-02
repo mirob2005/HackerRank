@@ -27,11 +27,8 @@ class BST:
     def __init__(self):
         self.root = None
         self.count = 0
-        self.median = None
-        self.oldMedian = None
         # True = Even, False = Odd
         self.parity = True
-        self.medianEdge = 0
 
     def addNode(self,number):
         if self.root == None:
@@ -60,7 +57,7 @@ class BST:
         self.count += 1
         self.parity = not self.parity
         
-        self.computeMedian(True,number)
+        self.computeMedian()
 
     def removeNode(self,number):
         if self.root == None:
@@ -95,8 +92,6 @@ class BST:
                         ptr.parent.left = ptr.right
                     else:
                         ptr.parent.right = ptr.right
-                    if ptr == self.median:
-                        self.median = ptr.right
                     ptr.deleteNode()
                 elif ptr.right == None:
                     ptr.left.parent = ptr.parent
@@ -106,8 +101,6 @@ class BST:
                         ptr.parent.left = ptr.left
                     else:
                         ptr.parent.right = ptr.left
-                    if ptr == self.median:
-                        self.median = ptr.left
                     ptr.deleteNode()
                 else:
                     child = ptr.left
@@ -130,66 +123,33 @@ class BST:
             print('Wrong!')
             return
 
-        self.computeMedian(False,number)
+        self.computeMedian()
+        
     
-    def computeMedian(self,added,number):
-        if self.count == 1 or self.count == self.root.count:
-            self.median = self.root
-            self.oldMedian = self.median.number
-            print(self.median.number)
-        else:
-            if self.parity:
-                #Even Number of ints
-                if ((number > self.oldMedian and added) or
-                    (number < self.oldMedian and not added) or
-                    (number == self.oldMedian and not added
-                     and self.median.number < number)):
-                    if self.median.right:
-                        secondMedian = self.median.right.number
-                    else:
-                        secondMedian = self.median.parent.number
-                    self.medianEdge = 1
-                    median = (self.median.number+secondMedian)/2
-                    self.oldMedian = median
+    def computeMedian(self):
+        self.traverseTree(self.root)
+
+    def traverseTree(self,root,count=1,last=0):
+        if root.left:
+            count,last = self.traverseTree(root.left,count)
+        for i in range(root.count):
+            if count == (self.count//2 + 1):
+                if self.parity:
+                    median = (last + root.number)/2
                     if median == int(median):
                         print(int(median))
+                        #return None,None
                     else:
                         print(median)
-                elif ((number < self.oldMedian and added) or
-                    (number > self.oldMedian and not added) or
-                    (number == self.oldMedian and not added
-                     and self.median.number > number)):
-                    if self.median.left:
-                        secondMedian = self.median.left.number
-                    else:
-                        secondMedian = self.median.parent.number
-                    self.medianEdge = -1
-                    median = (self.median.number+secondMedian)/2
-                    self.oldMedian = median
-                    if median == int(median):
-                        print(int(median))
-                    else:
-                        print(median)
+                        #return None,None
                 else:
-                    print(self.median.number)
-                    self.oldMedian = self.median.number
-            else:
-                #Odd number of ints
-                if (number > self.oldMedian and added) or (number < self.oldMedian and not added):
-                    if self.medianEdge == 1:
-                        if self.median.right:
-                            self.median = self.median.right
-                        else:
-                            self.median = self.median.parent
-                elif (number < self.oldMedian and added) or (number > self.oldMedian and not added):
-                    if self.medianEdge == -1:
-                        if self.median.left:
-                            self.median = self.median.left
-                        else:
-                            self.median = self.median.parent
-                self.medianEdge = 0
-                print(self.median.number)
-                self.oldMedian = self.median.number
+                    print(root.number)
+                    #return None,None
+            count += 1
+            last = root.number
+        if root.right:
+            count,last = self.traverseTree(root.right,count,last)
+        return count,last
 
 
 if __name__ == '__main__':

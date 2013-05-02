@@ -3,7 +3,7 @@
 ## Search:
 https://www.hackerrank.com/categories/algorithms/search
 
-- 3/8 Completed
+- 4/8 Completed
 
 ### Coin on the Table:
 https://www.hackerrank.com/challenges/coin-on-the-table
@@ -24,6 +24,17 @@ https://www.hackerrank.com/challenges/flowers
 - Prices are sorted in order of lowest to highest.
 - Then the highest priced item is removed and given to the next available 'friend'.
 - Repeating as necessary so that the person with the most flowers has at most one more than the friend with the least.
+
+### Median
+https://www.hackerrank.com/challenges/median
+
+- 10/10 Correct
+- Each additional number added to the list is inserted using binary search to find the correct index.
+- Each number removed is also found (or not found) using binary search to find the index to remove.
+- This way the list is sorted as the numbers are inputted and the list never has to be explicitly sorted.
+- The median is found by seeing if the list has an even number or odd number of elements.
+- If even, the median is the average of the 2 middle elements found using: 'index1 = length//2 -1' and 'index2 = length//2'.
+- If odd, the median is the middle element found using: index = length//2
 
 ### Pairs:
 https://www.hackerrank.com/challenges/pairs

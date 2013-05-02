@@ -27,6 +27,7 @@ class BST:
     def __init__(self):
         self.root = None
         self.count = 0
+        self.last = 0
         # True = Even, False = Odd
         self.parity = True
 
@@ -129,13 +130,13 @@ class BST:
     def computeMedian(self):
         self.traverseTree(self.root)
 
-    def traverseTree(self,root,count=1,last=0):
+    def traverseTree(self,root,count=1):
         if root.left:
-            count,last = self.traverseTree(root.left,count)
+            count = self.traverseTree(root.left,count)
         for i in range(root.count):
             if count == (self.count//2 + 1):
                 if self.parity:
-                    median = (last + root.number)/2
+                    median = (self.last + root.number)/2
                     if median == int(median):
                         print(int(median))
                         #return None,None
@@ -146,10 +147,10 @@ class BST:
                     print(root.number)
                     #return None,None
             count += 1
-            last = root.number
+            self.last = root.number
         if root.right:
-            count,last = self.traverseTree(root.right,count,last)
-        return count,last
+            count= self.traverseTree(root.right,count)
+        return count
 
 
 if __name__ == '__main__':

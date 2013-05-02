@@ -9,6 +9,7 @@ https://www.hackerrank.com/categories/algorithms/search
 https://www.hackerrank.com/challenges/coin-on-the-table
 
 - 10/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/633605
 - Done using Dynamic Programming.
 - All of the squares are stored in a table. Each sqaure has 4 items stored: current direction, current distance to goal, current number of changes required to reach goal, original direction.
 - The table is filled out initially by starting at the goal and going outward in a BFS-type way using a queue.
@@ -21,6 +22,7 @@ https://www.hackerrank.com/challenges/coin-on-the-table
 https://www.hackerrank.com/challenges/flowers
 
 - 10/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/626703
 - Prices are sorted in order of lowest to highest.
 - Then the highest priced item is removed and given to the next available 'friend'.
 - Repeating as necessary so that the person with the most flowers has at most one more than the friend with the least.
@@ -29,6 +31,7 @@ https://www.hackerrank.com/challenges/flowers
 https://www.hackerrank.com/challenges/median
 
 - 10/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/635851
 - Each additional number added to the list is inserted using binary search to find the correct index.
 - Each number removed is also found (or not found) using binary search to find the index to remove.
 - This way the list is sorted as the numbers are inputted and the list never has to be explicitly sorted.
@@ -40,7 +43,14 @@ https://www.hackerrank.com/challenges/median
 https://www.hackerrank.com/challenges/pairs
 
 - 15/15 Correct
+- Submission: https://www.hackerrank.com/submissions/code/626684
 - The numbers are sorted from lowest to highest.
 - The algorithm starts with a number xi and iterates though all of the following numbers until one is found to be equal to xi + K or greater than xi + K.
 - If it's equal, we incremement our count and move on to the next number.
 - Else we just move on to the next number.
+
+### Task Scheduling:
+https://www.hackerrank.com/challenges/task-scheduling
+
+- 4/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/636164

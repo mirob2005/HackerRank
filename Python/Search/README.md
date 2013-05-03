@@ -3,13 +3,15 @@
 ## Search:
 https://www.hackerrank.com/categories/algorithms/search
 
-- 4/8 Completed
+- 5/8 Completed
 
 ### Coin on the Table:
 https://www.hackerrank.com/challenges/coin-on-the-table
 
 - 10/10 Correct
 - Submission: https://www.hackerrank.com/submissions/code/633605
+- Longest Time: 7.05 seconds where N,M < 51 and K < 1001 (table of 2500 squares)
+
 - Done using Dynamic Programming.
 - All of the squares are stored in a table. Each sqaure has 4 items stored: current direction, current distance to goal, current number of changes required to reach goal, original direction.
 - The table is filled out initially by starting at the goal and going outward in a BFS-type way using a queue.
@@ -23,6 +25,8 @@ https://www.hackerrank.com/challenges/flowers
 
 - 10/10 Correct
 - Submission: https://www.hackerrank.com/submissions/code/626703
+- Longest Test: 0.12 seconds
+
 - Prices are sorted in order of lowest to highest.
 - Then the highest priced item is removed and given to the next available 'friend'.
 - Repeating as necessary so that the person with the most flowers has at most one more than the friend with the least.
@@ -32,6 +36,8 @@ https://www.hackerrank.com/challenges/median
 
 - 10/10 Correct
 - Submission: https://www.hackerrank.com/submissions/code/635851
+- Longest Test: 4.6 seconds where 0<n<=100,000
+
 - Each additional number added to the list is inserted using binary search to find the correct index.
 - Each number removed is also found (or not found) using binary search to find the index to remove.
 - This way the list is sorted as the numbers are inputted and the list never has to be explicitly sorted.
@@ -44,6 +50,8 @@ https://www.hackerrank.com/challenges/pairs
 
 - 15/15 Correct
 - Submission: https://www.hackerrank.com/submissions/code/626684
+- Longest Test: 0.3 seconds where N<=10^5
+
 - The numbers are sorted from lowest to highest.
 - The algorithm starts with a number xi and iterates though all of the following numbers until one is found to be equal to xi + K or greater than xi + K.
 - If it's equal, we incremement our count and move on to the next number.
@@ -52,5 +60,14 @@ https://www.hackerrank.com/challenges/pairs
 ### Task Scheduling:
 https://www.hackerrank.com/challenges/task-scheduling
 
-- 4/10 Correct
-- Submission: https://www.hackerrank.com/submissions/code/636164
+- 10/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/636683
+- Longest Test: <3 seconds (100,000 tasks)
+
+- Done with dynamic programming in mind. (Stores data to avoid recalculation for each added task)
+- The program keeps track of the latest deadline and keeps a list of usuable time slots.
+- Whenever a time slot is used, it is popped from the list.
+- The greatest time slot prior to the deadline time is used first.
+- In order to find this greatest available time slot before the deadline, a binary search of the list is conducted and returns the index.
+- This index and subsequent lower indices are popped from the list until there are no more time slots or until all minutes are used up.
+- If we run out of time slots, the remaining minutes are added to the lateness of the deadlines.

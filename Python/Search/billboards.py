@@ -7,16 +7,24 @@ if __name__ == '__main__':
 
     for billboard in range(N):
         profits.append(int(input()))
-        
-    combinations = []
-    
-    factor = K +1
-    
-    for x in range(factor):
-        combinations.append(0)
-    
-        for index,bb in enumerate(profits):
-            if (index + 1)%factor != x:
-                combinations[x]+= bb
 
-    print(max(combinations))
+    table = []
+
+    for row in range(N+1):
+        table.append([])
+    table[0] = [0 for x in range(K+1)]
+
+    for index,bb in enumerate(profits):
+        for adjacent in range(K+1):
+            if adjacent == 0:
+                table[index+1].append(max(table[index]))
+            else:
+                table[index+1].append(table[index][adjacent-1]+bb)
+
+    value = 0
+    for row in table:
+        high = max(row)
+        if high > value:
+            value = high
+
+    print(value)

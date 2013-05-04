@@ -10,21 +10,14 @@ if __name__ == '__main__':
 
     table = []
 
-    for row in range(N+1):
-        table.append([])
-    table[0] = [0 for x in range(K+1)]
+    for row in range(2):
+        table.append([0 for x in range(K+1)])
 
-    for index,bb in enumerate(profits):
-        for adjacent in range(K+1):
-            if adjacent == 0:
-                table[index+1].append(max(table[index]))
-            else:
-                table[index+1].append(table[index][adjacent-1]+bb)
+    index = True
+    for bb in profits:
+        table[not index][0] = max(table[index])
+        for adjacent in range(1,K+1):
+            table[not index][adjacent] = table[index][adjacent-1]+bb
+        index = not index
 
-    value = 0
-    for row in table:
-        high = max(row)
-        if high > value:
-            value = high
-
-    print(value)
+    print(max(table[index]))

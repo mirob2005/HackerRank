@@ -3,7 +3,23 @@
 ## Search:
 https://www.hackerrank.com/categories/algorithms/search
 
-- 5/8 Completed
+- 5/8 Completed Successfully
+
+### Arithmetic Progressions:
+https://www.hackerrank.com/challenges/arithmetic-progressions
+
+- 1/9 Correct (2 Wrong, 6 Time Limit)
+- Submission: https://www.hackerrank.com/submissions/code/637454
+
+- NOT DONE
+
+### Billboards
+https://www.hackerrank.com/challenges/billboards
+
+- 8/10 Correct (2 Time Limit)
+- Submission: https://www.hackerrank.com/submissions/code/637457
+
+- NOT DONE
 
 ### Coin on the Table:
 https://www.hackerrank.com/challenges/coin-on-the-table
@@ -71,3 +87,11 @@ https://www.hackerrank.com/challenges/task-scheduling
 - In order to find this greatest available time slot before the deadline, a binary search of the list is conducted and returns the index.
 - This index and subsequent lower indices are popped from the list until there are no more time slots or until all minutes are used up.
 - If we run out of time slots, the remaining minutes are added to the lateness of the deadlines.
+
+### Triplets:
+https://www.hackerrank.com/challenges/triplets
+
+- 6/15 Correct (9 Time Limit)
+- Submission: https://www.hackerrank.com/submissions/code/637455
+
+- NOT DONE

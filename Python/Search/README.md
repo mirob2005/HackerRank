@@ -24,7 +24,7 @@ https://www.hackerrank.com/challenges/billboards
 - Originally, I was filling out a KN table to record all possibilities and thus achieving O(KN) complexity.
 - This took ~60 seconds for a less complex test case (N = 40000, K = 6000), and eventually down to ~35 seconds by skipping rows in the table and by using a 2 by K table.
 - Now, the algorithm starts by taking in the first K+1 elements.
-- Then we keep a N element array for our DP table and a array to keep a queue of skippable indices.
+- Then we keep a N element array for our DP table and an array to keep a queue of skippable indices.
 - The DP table will begin by recording the first K+1 elements, but then start recording the sum of the skippable billboards.
 - By the end, the first index in our queue will correspond to the index in our DP table which will be the sum of the billboards we will skip.
 - This way, our time complexity is O(N) and our space complexity is also O(N).

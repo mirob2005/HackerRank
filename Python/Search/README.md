@@ -3,7 +3,7 @@
 ## Search:
 https://www.hackerrank.com/categories/algorithms/search
 
-- 5/8 Completed Successfully
+- 6/8 Completed Successfully
 
 ### Arithmetic Progressions:
 https://www.hackerrank.com/challenges/arithmetic-progressions
@@ -16,10 +16,19 @@ https://www.hackerrank.com/challenges/arithmetic-progressions
 ### Billboards
 https://www.hackerrank.com/challenges/billboards
 
-- 8/10 Correct (2 Time Limit)
-- Submission: https://www.hackerrank.com/submissions/code/637457
+- 10/10 Correct
+- Submission: https://www.hackerrank.com/submissions/code/641716
+- Longest Time: 0.78 seconds where N = 98789 and K = 21012
 
-- NOT DONE
+- Done using Dynamic Programming
+- Originally, I was filling out a KN table to record all possibilities and thus achieving O(KN) complexity.
+- This took ~60 seconds for a less complex test case (N = 40000, K = 6000), and eventually down to ~35 seconds by skipping rows in the table and by using a N by 2 table.
+- Now, the algorithm starts by taking in the first K+1 elements.
+- Then we keep a N element array for our DP table and a array to keep a queue of skippable indices.
+- The DP table will begin by recording the first K+1 elements, but then start recording the sum of the skippable billboards.
+- By the end, the first index in our queue will correspond to the index in our DP table which will be the sum of the billboards we will skip.
+- This way, our time complexity is O(N) and our space complexity is also O(N).
+- Constraints on the problem were: 0<K<=N<=100,000
 
 ### Coin on the Table:
 https://www.hackerrank.com/challenges/coin-on-the-table

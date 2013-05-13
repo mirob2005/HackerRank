@@ -1,4 +1,14 @@
+import time
+import math
+
 if __name__ == '__main__':
+    
+    s = time.clock()
+    
+    #Store computed factorials to avoid recalculating
+    fact = {}
+
+    
     N = int(input())
     
     AP = []
@@ -14,28 +24,26 @@ if __name__ == '__main__':
         
         if operation[0] == 0:
             #Query
-            seqs = []
             index = operation[1] - 1
+            K=0
+            V=1
             while index < operation[2]:
-                seqs.append([pow((AP[index][0]+x*AP[index][1]),AP[index][2]) for x in range(1000)])
+                K+=AP[index][2]
+                V*=pow(AP[index][1],AP[index][2])
                 index += 1
-
-            product = [1 for x in range(1000)]
-            for seq in seqs:
-                for index,element in enumerate(seq):
-                    product[index] *= element
-            
-            k = 0
-            difference = product[:]
-            while len(set(difference)) != 1:
-                for index,element in enumerate(difference[1:]):
-                    difference[index] = element - difference[index]
-                difference.pop()
-                k += 1
-            print('%s %s'%(k,difference[0]%1000003))
+            if K in fact:
+                V*=fact[K]
+            else:
+                F = math.factorial(K)
+                fact[K] = F
+                V*=F
+            print('%s %s'%(K,V%1000003))
         else:
             #Update
             index = operation[1] - 1
             while index < operation[2]:
                 AP[index][2] += operation[3]
                 index += 1
+    f = time.clock()
+    total = f-s
+    print(total)

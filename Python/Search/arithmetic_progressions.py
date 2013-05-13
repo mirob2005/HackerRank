@@ -17,10 +17,10 @@ if __name__ == '__main__':
             seqs = []
             index = operation[1] - 1
             while index < operation[2]:
-                seqs.append([pow((AP[index][0]+x*AP[index][1]),AP[index][2]) for x in range(5)])
+                seqs.append([pow((AP[index][0]+x*AP[index][1]),AP[index][2]) for x in range(1000)])
                 index += 1
 
-            product = [1,1,1,1,1]
+            product = [1 for x in range(1000)]
             for seq in seqs:
                 for index,element in enumerate(seq):
                     product[index] *= element

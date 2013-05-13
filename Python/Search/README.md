@@ -8,7 +8,7 @@ https://www.hackerrank.com/categories/algorithms/search
 ### Arithmetic Progressions:
 https://www.hackerrank.com/challenges/arithmetic-progressions
 
-- 1/9 Correct (2 Wrong, 6 Time Limit)
+- 3/9 Correct (6 Time Limit)
 - Submission: https://www.hackerrank.com/submissions/code/637454
 
 - NOT DONE
@@ -101,6 +101,7 @@ https://www.hackerrank.com/challenges/task-scheduling
 https://www.hackerrank.com/challenges/triplets
 
 - 6/15 Correct (9 Time Limit)
+- Current Approach time complexity: O(n^3). Solution requires O(nlogn) to make time limit.
 - Submission: https://www.hackerrank.com/submissions/code/637455
 
 - NOT DONE

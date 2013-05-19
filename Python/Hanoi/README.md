@@ -1,4 +1,4 @@
-# Tower of Hanoi Facebook Interview Sample Question:
+# Tower of Hanoi Question:
 
 There are K pegs. Each peg can hold discs in decreasing order of radius when looked from bottom to top of the peg. There are N discs which have radius 1 to N; Given the initial configuration of the pegs and the final configuration of the pegs, output the moves required to transform from the initial to final configuration. You are required to do the transformations in minimal number of moves.
 
